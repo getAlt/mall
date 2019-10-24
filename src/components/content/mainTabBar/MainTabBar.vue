@@ -25,8 +25,8 @@
 
 <script>
 // 引入tab-bar组件
-import TabBar from "components/common/tabber/TabBar"
-import TabBarItem from "components/common/tabber/TabBarItem"
+import TabBar from "components/common/tabbar/TabBar"
+import TabBarItem from "components/common/tabbar/TabBarItem"
 export default {
   name: 'MainTabBar',
   components: {

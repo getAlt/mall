@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- TabBar导航 -->
     <MainTabBar/>
     <router-view></router-view>
   </div>
@@ -18,4 +19,8 @@ export default {
 <style>
   /* 引入css基础样式文件 */
   @import url("assets/css/base.css");
+  #app {
+    max-width: 768px;
+    margin: auto;
+  }
 </style>
