@@ -24,5 +24,8 @@ export default {
 </script>
 
 <style>
-
+  .goods {
+    overflow: hidden;
+    padding: 0 2px;
+  }
 </style>

@@ -38,7 +38,7 @@ export default {
   .goods-item {
     width: 50%;
     float: left;
-    padding: 0 5px 40px;
+    padding: 0 3px 40px;
     box-sizing: border-box;
     position: relative;
   }
