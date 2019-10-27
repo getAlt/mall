@@ -5,6 +5,10 @@ import router from "./router"
 
 Vue.config.productionTip = false
 
+// 添加事件中心（事件总线）(添加在vue原型上)
+Vue.prototype.$bus = new Vue();
+
+
 new Vue({
   render: h => h(App),
   router

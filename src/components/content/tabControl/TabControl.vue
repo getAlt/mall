@@ -39,9 +39,6 @@ export default {
     text-align: center;
     height: 40px;
     line-height: 40px;
-    /* 新属性，配合top实现吸顶效果 */
-    position: sticky;
-    top: 44px;
     background: #fff;
     font-size: 14px;
     z-index: 2;

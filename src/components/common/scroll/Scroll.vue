@@ -44,10 +44,18 @@ export default {
   },
   methods: {
     scrollTo(x, y, time) {
-      this.scroll.scrollTo(x, y, time)
+      // this.scroll.scrollTo(x, y, time)
+      // 优化（判断）
+      this.scroll && this.scroll.scrollTo && this.scroll.scrollTo(x, y, time)
     },
     finishPullUp() {
-      this.scroll.finishPullUp()
+      // this.scroll.finishPullUp()
+      this.scroll && this.scroll.finishPullUp && this.scroll.finishPullUp()
+    },
+    refresh() {
+      // this.scroll.refresh()
+      console.log("----防抖");
+      this.scroll && this.scroll.refresh && this.scroll.refresh()
     }
   }
 }

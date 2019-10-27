@@ -22,19 +22,13 @@ export default {
     text-align: center;
     letter-spacing: 2px;
     box-shadow: 0 1px 1px rgba(100, 100, 100, .1);
-    position: fixed;
-    z-index: 1;
+    position: relative;
+    z-index: 9;
   }
   .left, .right {
     width: 60px;
   }
-  .left {
-
-  }
   .center {
     flex: 1;
-  }
-  .right {
-
   }
 </style>

@@ -2,7 +2,8 @@
   <div class="goods-item">
       <a :href="goodsItem.clientUrl">
         <div class="goods-img">
-          <img :src="goodsItem.show.img" alt="">
+          <!-- @load事件监听图片是否加载完成 -->
+          <img :src="goodsItem.show.img" @load="imageLoad" alt="">
         </div>
         <div class="goods-info">
           <p class="goods-title">{{ goodsItem.title }}</p>
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+import { log } from 'util';
 export default {
   name: "GoodsListItem",
   props: {
@@ -29,6 +31,12 @@ export default {
   filters: {
     pricefilter(value) {
       return "￥"+ value;
+    }
+  },
+  methods: {
+    imageLoad() {
+      // 通过事件中心（事件总线）将事件发射出去,告诉首页图片加载完成
+      this.$bus.$emit("imageLoad")
     }
   }
 }
