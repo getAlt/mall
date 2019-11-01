@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item">
-      <a :href="goodsItem.clientUrl">
+      <a href="javascript:;" @click="goodsItemClick">
         <div class="goods-img">
           <!-- @load事件监听图片是否加载完成 -->
           <img :src="goodsItem.show.img" @load="imageLoad" alt="">
@@ -21,6 +21,7 @@ import { log } from 'util';
 export default {
   name: "GoodsListItem",
   props: {
+    // 接收父组件的单个商品信息
     goodsItem: {
       type: Object,
       default() {
@@ -37,12 +38,16 @@ export default {
     imageLoad() {
       // 通过事件中心（事件总线）将事件发射出去,告诉首页图片加载完成
       this.$bus.$emit("imageLoad")
+    },
+    goodsItemClick() {
+      // --跳转（带着商品的id)
+      this.$router.push("/detail/" + this.goodsItem.iid)
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
   .goods-item {
     width: 50%;
     float: left;

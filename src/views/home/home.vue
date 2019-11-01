@@ -70,7 +70,8 @@
       scrollHeight: 0,
       isShow: false,
       isTabControl: false,
-      tabControlTop: 0
+      tabControlTop: 0,
+      saveY: 0
       }
     },
     created() {
@@ -100,9 +101,7 @@
       }, 
       scrollcontent(position) {
           this.isShow = -position.y > 1000;
-          this.isTabControl = -position.y > this.tabControlTop - 40;
-          console.log(this.isTabControl);
-          
+          this.isTabControl = -position.y > this.tabControlTop - 40;          
       },
       loadMore() {
         console.log("加载更多");
@@ -154,7 +153,17 @@
       this.$bus.$on("imageLoad", ()=>{
         refresh()
       })
-    }
+    },
+    // 通过监听页面是否处于活跃状态，记录当前页面滚动的位置]
+    // --活跃状态 (将页面滚动到离开时的位置)
+    // --暂时没有此bug ，如果出现则启用此方法
+    activated() {
+      // this.$refs.scroll.scrollTo(0, this.saveY, 0)
+    },
+    // --离开的时候 (记录当前滚动的位置)
+    deactivated() {
+      // this.saveY = this.$refs.scroll.scroll.y      
+    },
   }
 </script>
 

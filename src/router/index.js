@@ -23,6 +23,10 @@ const routes = [
   {
     path: "/profile",
     component: ()=> import("views/profile/profile")
+  },
+  { // --详情
+    path: "/detail/:iid",
+    component: ()=> import("views/detail/detail")
   }
 ]
 

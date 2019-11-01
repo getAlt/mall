@@ -1,5 +1,6 @@
 <template>
   <div class="goods">
+    <!-- 循环加载的商品，将循环的每一个商品传递给子组件 -->
     <GoodsListItem v-for='item in goods' :key='item.id' :goods-item='item' />
   </div>
 </template>

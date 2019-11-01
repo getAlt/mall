@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .recommends-list {
     display: flex;
     text-align: center;
