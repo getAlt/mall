@@ -3,7 +3,7 @@
         <!-- nav导航栏 -->
         <NavBar class="home-nav"><h3 slot="center">购物街</h3></NavBar>
         <!-- 控制吸顶效果的选项卡 -->
-        <TabControl :sib-tab-control='tabControl' @tabClick='tabClick' ref="tabControl" v-show="isTabControl" class="isTabControlTop" />
+        <TabControl :sib-tab-control='tabControl' @tabClick='tabClick' ref="toptabControl" v-show="isTabControl" class="isTabControlTop" />
         <!-- better-scroll -->
         <Scroll :style="{ height:scrollHeight }"
                 :probeType="3"
@@ -19,7 +19,7 @@
           <Feature />
           <!-- 选项卡 -->
           <TabControl :sib-tab-control='tabControl' @tabClick='tabClick' ref="tabControl" />
-          <!-- 选项数据列表 -->
+          <!-- 商品列表 -->
           <GoodsList :goods='showGoods' />
         </Scroll>
         <!-- 返回顶部:监听组件的事件需要添加native修饰符 -->
@@ -38,7 +38,8 @@
   import GoodsList from 'components/content/goods/GoodsList'
   import Scroll from 'components/common/scroll/Scroll'
   import BackTop from 'components/content/backTop/BackTop'
-  import { debounce } from 'common/util'
+  // import { debounce } from 'common/util'
+  import { itemListenerMixin } from 'common/mixin'
   // 网络请求
   import { getHomeMultidata, getHomeGoods } from 'network/home'
 
@@ -71,7 +72,8 @@
       isShow: false,
       isTabControl: false,
       tabControlTop: 0,
-      saveY: 0
+      saveY: 0,
+      // homeImgLoad: null
       }
     },
     created() {
@@ -98,13 +100,15 @@
             this.currentTab = 'sell'
             break
         }
+        // 解决点击页面导航不一致的问题
+        this.$refs.toptabControl.currentIndex = index
+        this.$refs.tabControl.currentIndex = index
       }, 
       scrollcontent(position) {
           this.isShow = -position.y > 1000;
           this.isTabControl = -position.y > this.tabControlTop - 40;          
       },
       loadMore() {
-        console.log("加载更多");
         this.getHomeGoods(this.currentTab)
       },
       // --吸顶效果
@@ -139,21 +143,23 @@
       }
     },
     computed: {
-    // 显示商品列表 
-    showGoods() {
-      return this.goods[this.currentTab].list
-    } 
+      // 显示商品列表 
+      showGoods() {
+        return this.goods[this.currentTab].list
+      } 
     },
     mounted() {
       this.scrollHeight = document.body.clientHeight - 49 + "px";
       // 监听事件中心的事件
       // --防抖
       // --使用better-scroll的refresh()方法重新加载高度 
-      const refresh = debounce(this.$refs.scroll.refresh, 50);
-      this.$bus.$on("imageLoad", ()=>{
-        refresh()
-      })
+      // const refresh = debounce(this.$refs.scroll.refresh, 50);
+      // this.homeImgLoad = ()=>{
+      //   refresh()
+      // }
+      // this.$bus.$on("imageLoad", this.homeImgLoad)
     },
+    mixins: [itemListenerMixin],
     // 通过监听页面是否处于活跃状态，记录当前页面滚动的位置]
     // --活跃状态 (将页面滚动到离开时的位置)
     // --暂时没有此bug ，如果出现则启用此方法
@@ -162,7 +168,9 @@
     },
     // --离开的时候 (记录当前滚动的位置)
     deactivated() {
-      // this.saveY = this.$refs.scroll.scroll.y      
+      // this.saveY = this.$refs.scroll.scroll.y    
+      // 离开首页时取消首页的下拉加载更多
+      this.$bus.$off("imageLoad", this.homeImgLoad)
     },
   }
 </script>

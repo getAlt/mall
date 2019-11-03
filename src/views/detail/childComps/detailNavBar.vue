@@ -26,13 +26,15 @@ export default {
   },
   data() {
     return {
-      titles: ["商品", "参数", "评论", "推荐"],
+      // titles: ["商品", "参数", "评论", "推荐"],
+      titles: ["商品", "推荐"],
       currentIndex: 0
     }
   },
   methods: {
     titleClick(value) {
-      this.currentIndex = value
+      this.currentIndex = value;
+      this.$emit("titleClick", value)
     },
     backClick() {
       this.$router.back()

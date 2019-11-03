@@ -3,7 +3,7 @@
     <van-swipe :autoplay="3000" indicator-color="white">
       <van-swipe-item v-for='item in sibBanners' :key='item.acm'>
         <a :href="item.link">
-          <img :src='item.image' alt="" @load="swiperImgLoad" />>
+          <img :src='item.image' alt="" @load="swiperImgLoad" />
         </a>
       </van-swipe-item>
     </van-swipe>

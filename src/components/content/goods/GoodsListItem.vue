@@ -3,7 +3,7 @@
       <a href="javascript:;" @click="goodsItemClick">
         <div class="goods-img">
           <!-- @load事件监听图片是否加载完成 -->
-          <img :src="goodsItem.show.img" @load="imageLoad" alt="">
+          <img :src="showImage" @load="imageLoad" alt="">
         </div>
         <div class="goods-info">
           <p class="goods-title">{{ goodsItem.title }}</p>
@@ -43,7 +43,12 @@ export default {
       // --跳转（带着商品的id)
       this.$router.push("/detail/" + this.goodsItem.iid)
     }
-  }
+  },
+  computed: {
+    showImage() {
+      return this.goodsItem.image || this.goodsItem.show.img
+    }
+  },
 }
 </script>
 
