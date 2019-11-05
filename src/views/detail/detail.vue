@@ -16,6 +16,8 @@
       <!-- 商品推荐 -->
       <GoodsList :goods="recommends" ref="GoodsList" />
     </Scroll>
+    <!-- 添加购物车 -->
+    <detailGoodsAction @addToCart="addToCart" />
   </div>
 </template>
 
@@ -30,7 +32,13 @@ import detailBaseInfo from './childComps/detailBaseInfo'
 import detailShopInfo from './childComps/detailShopInfo'
 import detailGoodsInfo from './childComps/detailGoodsInfo'
 import GoodsList from 'components/content/goods/GoodsList'
+import detailGoodsAction from './childComps/detailGoodsAction'
 import { debounce } from 'common/util'
+
+import Vue from 'vue';
+import { Notify } from 'vant';
+
+Vue.use(Notify);
 
 export default {
   name: "detail",
@@ -41,6 +49,7 @@ export default {
     detailShopInfo,
     detailGoodsInfo,
     GoodsList,
+    detailGoodsAction,
     Scroll
   },
   data() {
@@ -53,7 +62,8 @@ export default {
       paramInfo: {},
       recommends: [],
       themeTopYs: [],
-      getThemeTopY: null
+      getThemeTopY: null,
+      currentIndex: 0
     }
   },
   methods: {
@@ -66,16 +76,45 @@ export default {
       this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 200)
     },
     scrollcontent(position) {
-      const positionY = -position.y
-      console.log(positionY);
-      // ----------------------------
-      this.themeTopYs.forEach((item, index) => {
-        if(positionY>this.themeTopYs[index] && positionY<this.themeTopYs[index+1]){
-          this.$refs.detailNav.currentIndex = index
+      const positionY = -position.y+1
+      // ????????????????????有点晕
+      // 分为两个判断
+      // 1、滚动的距离大于当前
+      let length = this.themeTopYs.length;
+      for(var i=0; i<length; i++){
+        /* if(
+           this.currentIndex !== i &&
+           ((i < length-1 && positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i+1])
+            ||
+           (i === length-1 && positionY >= this.themeTopYs[i]))
+           ) {
+            this.currentIndex = i
+            this.$refs.detailNav.currentIndex = i
+        } */
+        if(positionY > this.themeTopYs[i]){
+            this.$refs.detailNav.currentIndex = i
         }
-        if()
-        // if(positionY>item)
-      })
+      }
+    },
+    // 添加到购物车
+    addToCart() {
+      // 保存数据
+      const addCartData = {}
+      addCartData.iid = this.iid
+      addCartData.topImages = this.topImages[0]
+      addCartData.goodsTitle = this.goods.title
+      addCartData.realPrice = this.goods.realPrice
+      addCartData.desc = this.goods.desc
+      // 保存到vuex状态管理中
+      // --mutations方式
+      // this.$store.commit('addCart', addCartData)
+      // --actions方式
+      this.$store.dispatch('addCart', addCartData)
+      this.$notify({
+        message: '添加成功!',
+        className: 'message',
+        duration: 500
+      });
     }
   },
   created() {
@@ -83,7 +122,6 @@ export default {
      this.iid = this.$route.params.iid;
      // 请求商品详情数据
       getDetail(this.iid).then(res => {
-      console.log(res);
       let data = res.result
       this.topImages = data .itemInfo.topImages
       // 获取商品信息(将应用的参数传入构造类， 保存对于数据)
@@ -105,7 +143,6 @@ export default {
     });
     // 获取推荐信息
       getRecommend().then((res) =>{
-        console.log("this.recommend",res);
         this.recommends = res.data.list
       })
   },
@@ -126,6 +163,6 @@ export default {
     height: 100vh;
   }
   .content {
-    height: calc(100% - 44px);
+    height: calc(100% - 94px);
   }
 </style>

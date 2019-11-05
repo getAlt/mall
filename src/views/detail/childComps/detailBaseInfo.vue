@@ -35,9 +35,6 @@ export default {
       services: this.goods.services
     }
   },
-  mounted(){
-    console.log("services",this.services)
-  },
   filters: {
     priceFilter(value) {
       return `￥${value}`

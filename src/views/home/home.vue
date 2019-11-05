@@ -182,10 +182,6 @@
   .contentbox {
     height: calc(100%-93px);
   }
-  .home-nav {
-    background: var(--color-tint);
-    color: #fff;
-  }
   .isTabControlTop {
     width: 100%;
     position: absolute;

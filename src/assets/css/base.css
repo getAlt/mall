@@ -64,3 +64,29 @@ body {
 .clearfix {
     *zoom: 1
 }
+
+/* navbar-background */
+
+.home-nav {
+    background: var(--color-tint);
+    color: #fff;
+}
+
+/* vant 购物车商品卡片组件 */
+.van-image__error, .van-image__img, .van-image__loading {
+    height: auto !important;
+}
+
+.van-checkbox__icon .van-icon {
+    border: 1px solid #ff5777 !important;
+}
+/* .van-popup .van-popup--top .van-notify .van-notify--danger {
+    position: absolute;
+} */
+.message {
+    position: absolute !important;
+    z-index: 9999 !important;
+    height: 44px !important;
+    line-height: 33px !important;
+    background: #ff5777 !important;
+  }

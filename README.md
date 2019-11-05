@@ -55,7 +55,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 #### 选项卡组件封装
 
-#### 商品数据请求（难点）
+#### 商品数据请求（数据结构难点）
 
 #### better-scroll滚动组件的使用及封装（细节）
 ```javascript
@@ -99,4 +99,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 将滚动距离放在一个数组内
 点击的某个板块的index值就是数组内对应的索引
 在图片加载完成之后再获取相应模块距离顶部的距离然后再push到数组内
+`
+
+#### 添加购物车 (vuex)
+
+`
+通过vuex做数据管理
 `

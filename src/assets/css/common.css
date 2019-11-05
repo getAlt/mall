@@ -12,6 +12,15 @@
 .style-red {
     color: #c81623;
 }
+/* 文字显示多少行 */
+.show-text-row {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: box;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
 /* 字体图标 */
 @font-face {
     font-family: 'icomoon';
